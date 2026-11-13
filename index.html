@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用藥安全與通路解盲 | OTC Painkiller Policy Debate</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #34495E;
+            --accent-blue: #3498DB;
+            --bg-light: #F8F9FA;
+            --text-main: #333333;
+            --text-muted: #7F8C8D;
+            --en-color: #95A5A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 雙語排版輔助類別 */
+        .en-text {
+            display: block;
+            font-size: 0.85em;
+            color: var(--en-color);
+            font-weight: 400;
+            margin-top: 0.2rem;
+            line-height: 1.4;
+        }
+        
+        .en-title {
+            display: block;
+            font-size: 0.5em;
+            color: var(--accent-blue);
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 導覽列 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav a span.en-nav {
+            font-size: 0.7em;
+            color: var(--text-muted);
+        }
+
+        nav a:hover, nav a:hover span.en-nav {
+            color: var(--accent-blue);
+        }
+
+        /* 共通區塊設定 */
+        section {
+            min-height: 100vh;
+            padding: 120px 10% 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        /* 首頁視覺區 */
+        #hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+            align-items: center;
+        }
+
+        #hero h2 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        #hero p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        /* 副作用分析區塊 */
+        .cards-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 48%;
+            min-width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .card.acetaminophen { border-top: 5px solid #F1C40F; }
+        .card.nsaids { border-top: 5px solid #E74C3C; }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .card li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            list-style: none;
+        }
+
+        .card li::before {
+            content: '•';
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        /* 政策思辨區塊 */
+        .debate-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .debate-row {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .debate-side {
+            flex: 1;
+            padding: 2.5rem;
+        }
+
+        .debate-side.pro { background: rgba(46, 204, 113, 0.05); border-right: 1px solid #eee; }
+        .debate-side.con { background: rgba(231, 76, 60, 0.05); }
+
+        .debate-side h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .pro h3 { color: #27AE60; }
+        .con h3 { color: #C0392B; }
+
+        .debate-item { margin-bottom: 2rem; }
+        .debate-item strong {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        /* 外部連結資料區塊 */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .resource-box {
+            display: flex;
+            flex-direction: column;
+            padding: 1.8rem;
+            background: white;
+            border: 1px solid #E5E8E8;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-box:hover {
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.15);
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+        }
+
+        .resource-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resource-box p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            padding-right: 2rem;
+        }
+
+        .resource-box::after {
+            content: '→';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-box:hover::after {
+            opacity: 1;
+            right: 1.2rem;
+        }
+
+        /* 頁尾 */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        /* 捲動動畫 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .card { width: 100%; }
+            .debate-row { flex-direction: column; }
+            .debate-side.pro { border-right: none; border-bottom: 1px solid #eee; }
+            #hero h2 { font-size: 2.2rem; }
+            nav ul { gap: 1rem; }
+            nav a span.en-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>專案研究 Portfolio</h1>
+        <ul>
+            <li><a href="#hero">首頁 <span class="en-nav">Home</span></a></li>
+            <li><a href="#analysis">成分解析 <span class="en-nav">Analysis</span></a></li>
+            <li><a href="#debate">政策思辨 <span class="en-nav">Debate</span></a></li>
+            <li><a href="#resources">參考資源 <span class="en-nav">Resources</span></a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="fade-in">
+            <h2>
+                OTC 止痛藥：便利與風險的拉鋸
+                <span class="en-text" style="font-size: 0.6em; margin-top: 1rem;">OTC Painkillers: The Tug-of-War Between Convenience and Risk</span>
+            </h2>
+            <p>
+                從市售止痛藥的藥理副作用，深度探討指示用藥（OTC）進駐便利商店之政策利弊與公衛影響。
+                <span class="en-text">An in-depth exploration of the pharmacological side effects of over-the-counter (OTC) painkillers and the public health implications of deregulating their sales in convenience stores.</span>
+            </p>
+        </div>
+    </section>
+
+    <section id="analysis">
+        <h2 class="section-title fade-in">
+            市售止痛藥成分與副作用解析
+            <span class="en-title">Analysis of OTC Painkiller Ingredients and Side Effects</span>
+        </h2>
+        
+        <div class="cards-container fade-in">
+            <div class="card acetaminophen">
+                <h3>乙醯胺酚類 <span class="en-text" style="display:inline; font-size: 0.7em;">Acetaminophen</span></h3>
+                <h4>代表藥物：普拿疼 <span class="en-text">e.g., Panadol, Tylenol</span></h4>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                    <strong>作用機轉 (Mechanism)：</strong> 主要作用於中樞神經系統，阻斷疼痛傳導並具有退燒效果，但不具備消炎作用。
+                    <span class="en-text">Acts primarily on the central nervous system to block pain transmission and reduce fever, but lacks anti-inflammatory properties.</span>
+                </p>
+                <ul>
+                    <li>
+                        <strong>肝毒性風險</strong>
+                        <span class="en-text" style="color:var(--text-main);">Hepatotoxicity Risk</span>
+                        由肝臟酵素代謝，若過量使用或併服酒精，易產生有毒代謝物 NAPQI，導致猛爆性肝炎。
+                        <span class="en-text">Overdose or concurrent alcohol use can generate the toxic metabolite NAPQI, leading to fulminant hepatitis.</span>
+                    </li>
+                    <li>
+                        <strong>潛在交互作用</strong>
+                        <span class="en-text" style="color:var(--text-main);">Potential Interactions</span>
+                        隱藏於多種感冒糖漿與綜合感冒藥中，易在不知情下重複投藥導致過量。
+                        <span class="en-text">Hidden in various cold syrups, leading to unintentional overdose through duplicated administration.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card nsaids">
+                <h3>非類固醇消炎止痛藥 <span class="en-text" style="display:inline; font-size: 0.7em;">NSAIDs</span></h3>
+                <h4>代表藥物：布洛芬 <span class="en-text">e.g., Ibuprofen, Advil</span></h4>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                    <strong>作用機轉 (Mechanism)：</strong> 抑制環氧化酶 (COX)，阻斷前列腺素合成，同時具備止痛、退燒與抗發炎效果。
+                    <span class="en-text">Inhibits cyclooxygenase (COX) to block prostaglandin synthesis, providing analgesic, antipyretic, and anti-inflammatory effects.</span>
+                </p>
+                <ul>
+                    <li>
+                        <strong>腸胃道損害</strong>
+                        <span class="en-text" style="color:var(--text-main);">Gastrointestinal Damage</span>
+                        減少胃部保護性前列腺素分泌，長期或空腹使用易引發潰瘍或出血。
+                        <span class="en-text">Reduces protective gastric prostaglandins. Long-term use can induce ulcers or bleeding.</span>
+                    </li>
+                    <li>
+                        <strong>腎臟與心血管風險</strong>
+                        <span class="en-text" style="color:var(--text-main);">Renal & Cardiovascular Risks</span>
+                        影響腎臟血流可能導致腎功能衰退；部分 NSAIDs 會增加心血管事件風險。
+                        <span class="en-text">Alters renal blood flow, potentially causing kidney decline and increasing cardiovascular risks.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="debate">
+        <h2 class="section-title fade-in">
+            通路鬆綁：便利商店販售 OTC 藥物之思辨
+            <span class="en-title">Deregulation: The Debate on Selling OTC Drugs in Convenience Stores</span>
+        </h2>
+        <div class="debate-container">
+            <div class="debate-row fade-in">
+                <div class="debate-side pro">
+                    <h3>支持開放<br><span class="en-text">Pro-Deregulation</span></h3>
+                    <div class="debate-item">
+                        <strong>落實自我照護 <span class="en-text" style="display:inline; color:inherit;">Empowering Self-Care</span></strong>
+                        賦權民眾自行處理輕微且短暫的疼痛，可減少輕症湧入急診。
+                        <span class="en-text">Empowering the public to manage mild, temporary pain reduces non-urgent emergency room visits.</span>
+                    </div>
+                    <div class="debate-item">
+                        <strong>購藥可近性 <span class="en-text" style="display:inline; color:inherit;">Enhanced Accessibility</span></strong>
+                        便利商店 24 小時營業特性，能填補夜間或假日藥局打烊時的醫療需求。
+                        <span class="en-text">The 24/7 nature of convenience stores fulfills the need for immediate medical relief during nights.</span>
+                    </div>
+                </div>
+                
+                <div class="debate-side con">
+                    <h3>反對開放<br><span class="en-text">Anti-Deregulation</span></h3>
+                    <div class="debate-item">
+                        <strong>缺乏專業把關 <span class="en-text" style="display:inline; color:inherit;">Lack of Professional Gatekeeping</span></strong>
+                        店員無藥學專業，無法評估消費者用藥史，易導致嚴重的藥物交互作用。
+                        <span class="en-text">Store clerks lack pharmaceutical expertise to evaluate a consumer's medical history.</span>
+                    </div>
+                    <div class="debate-item">
+                        <strong>過量與濫用風險 <span class="en-text" style="display:inline; color:inherit;">Risk of Overdose and Abuse</span></strong>
+                        若隨意將 OTC 與感冒藥混吃，極易突破安全劑量造成不可逆的肝損傷。
+                        <span class="en-text">Mixing OTC painkillers with cold medicines can easily cause irreversible liver damage.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resources" style="min-height: auto; padding-top: 60px;">
+        <h2 class="section-title fade-in">
+            資料補充與外部連結
+            <span class="en-title">Supplementary Data & External Links</span>
+        </h2>
+        
+        <div class="resources-grid fade-in">
+            <a href="https://www.fda.gov.tw/TC/index.aspx" target="_blank" class="resource-box">
+                <h4>📄 TFDA 台灣衛生福利部食品藥物管理署</h4>
+                <p>
+                    成藥與指示用藥 (OTC) 之分級規範與安全性評估基準。
+                    <span class="en-text">Classification regulations and safety assessment criteria for OTC drugs in Taiwan.</span>
+                </p>
+            </a>
+            <a href="https://www.who.int/health-topics/self-care" target="_blank" class="resource-box">
+                <h4>🌐 WHO 世界衛生組織</h4>
+                <p>
+                    全球自我照護指引 (Self-Care Interventions) 與非處方藥物的公衛倡議。
+                    <span class="en-text">Global guidelines on Self-Care Interventions and public health initiatives for non-prescription medicines.</span>
+                </p>
+            </a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" class="resource-box">
+                <h4>📚 PubMed 醫學文獻資料庫</h4>
+                <p>
+                    NSAIDs 導致之心血管風險與乙醯胺酚肝毒性之最新臨床研究。
+                    <span class="en-text">Latest clinical research on cardiovascular risks of NSAIDs and hepatotoxicity of Acetaminophen.</span>
+                </p>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            © 2026 UI/UX & Frontend Portfolio.<br>
+            本網站內容僅供介面設計展示與公衛學術探討，不構成任何醫療建議。<br>
+            <span class="en-text" style="color: #BDC3C7;">Content is intended for UI/UX demonstration and public health academic discussion only, and does not constitute medical advice.</span>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 實作滾動淡入特效
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            const hiddenElements = document.querySelectorAll('.fade-in');
+            hiddenElements.forEach((el) => observer.observe(el));
+            
+            // 實作導覽列平滑滾動
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // 若連結包含 # 才執行平滑滾動 (避免影響外部連結)
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
